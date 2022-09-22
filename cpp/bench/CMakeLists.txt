@@ -33,6 +33,7 @@ add_executable(${RAFT_CPP_BENCH_TARGET}
   bench/spatial/fused_l2_nn.cu
   bench/spatial/knn.cu
   bench/spatial/selection.cu
+  bench/spatial/sparse_l2_nn.cu
   bench/main.cpp
 )
 
