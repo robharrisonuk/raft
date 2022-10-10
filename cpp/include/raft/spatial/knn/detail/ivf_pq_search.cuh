@@ -98,6 +98,8 @@ struct fp_8bit {
       return fp_8bit<ExpBits, false>{static_cast<uint8_t>(
         (*reinterpret_cast<uint32_t*>(&v) + (ExpMask << 23u) - 0x3f800000u) >> (15u + ExpBits))};
     }
+
+    return fp_8bit<ExpBits, Signed>{static_cast<uint8_t>(0)};
   }
 
   static HDI auto fp_8bit2float(const fp_8bit<ExpBits, Signed>& v) -> float
@@ -640,6 +642,10 @@ __launch_bounds__(1024) __global__
       base_diff = reinterpret_cast<float*>(smem_buf);
     }
   }
+  else
+  {
+    static_assert(base_diff == base_diff);
+  }
 
   for (int ib = blockIdx.x; ib < n_queries * n_probes; ib += gridDim.x) {
     uint32_t query_ix;
@@ -665,6 +671,7 @@ __launch_bounds__(1024) __global__
       // Store all calculated distances to out_scores
       auto max_samples = Pow2<128>::roundUp(cluster_offsets[n_probes]);
       out_scores       = _out_scores + max_samples * query_ix;
+      static_assert(out_indices == out_indices);
     }
     uint32_t label              = cluster_labels[n_probes * query_ix + probe_ix];
     const float* cluster_center = cluster_centers + (dim * label);
