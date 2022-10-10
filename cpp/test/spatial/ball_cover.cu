@@ -159,7 +159,7 @@ class BallCoverKNNQueryTest : public ::testing::TestWithParam<BallCoverInputs<va
 
     uint32_t k         = params.k;
     uint32_t n_centers = 25;
-    float weight       = params.weight;
+    //float weight       = params.weight;
     auto metric        = params.metric;
 
     rmm::device_uvector<value_t> X(params.n_rows * params.n_cols, handle.get_stream());
@@ -260,7 +260,7 @@ class BallCoverAllKNNTest : public ::testing::TestWithParam<BallCoverInputs<valu
 
     uint32_t k         = params.k;
     uint32_t n_centers = 25;
-    float weight       = params.weight;
+//  float weight       = params.weight;
     auto metric        = params.metric;
 
     rmm::device_uvector<value_t> X(params.n_rows * params.n_cols, handle.get_stream());
